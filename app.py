@@ -7,6 +7,8 @@ import os
 app = Flask(__name__)
 
 @app.route('/receive',methods=['POST','GET'])
+
+Message = ""
 def g():
 	#return request.args.get('hub.challenge')
 	a = request.get_json()
@@ -15,6 +17,7 @@ def g():
 	try:
 		mess = a['entry'][0]['messaging'][0]['message']['text']
 		print mess
+        Message = mess
 		userID= a['entry'][0]['messaging'][0]['sender']['id']
 		#postFbtext(userID,)
 		#witResp(mess)
@@ -23,6 +26,52 @@ def g():
 		print 'FB message input Failed'
 
 	return 'hello world'
+
+def respond(message): 
+    #print('Hello World!')
+    dicteg = getWit(message)
+    mode = 0;
+    location = "" 
+    time = ""
+    seatno = "" 
+    order = ""
+    for key,val in dicteg.iteritems():
+        if mode == 1: 
+            if key=="wit/location": 
+                location = value;
+            elif key=="wit/datetime":
+                time = value;
+            elif key=="number_seats": 
+                seatno = value;
+        if mode == 2: 
+            if key=="wit/location": 
+                location = value;
+            elif key=="fooditems":
+                order = value;
+        if mode == 3: 
+            if key=="wit/location": 
+                location = value;                      
+        if key == "self_enquiry":
+            return 'My name is Emily and I was designed by Varun and Roopesh, at SSN.Also, I promise not to destroy humanity :)'
+        elif key == "greeting":
+            return 'Hello there!'
+        elif key == "action" 
+            if value == "book": 
+                mode = 1; 
+            if value == "order" or value == "preorder": 
+                mode = 2;     
+            if value == "specials": 
+                mode = 3;  
+    if mode == 1: 
+        return location+" "+time+" "+seatno; 
+    if mode == 2: 
+        return location+" "+order; 
+    if mode == 3: 
+        return location;                        
+        
+
+def getMsg():
+    return Message
 
 Witaccess_token = "LVLKPQNZ5IEMVZ6OB5QHGSUZGBBGZCNM"
 
