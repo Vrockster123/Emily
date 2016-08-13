@@ -1,0 +1,22 @@
+{
+  "msg_id" : "038dc8ac-d693-46ee-8b89-577f7b1ae77f",
+  "_text" : "book me 7 seats in savera",
+  "entities" : {
+    "action" : [ {
+      "confidence" : 0.973419261600406,
+      "type" : "value",
+      "value" : "book"
+    } ],
+    "number_seats" : [ {
+      "confidence" : 1,
+      "type" : "value",
+      "value" : "7 "
+    } ],
+    "location" : [ {
+      "confidence" : 0.8901269885592972,
+      "type" : "value",
+      "value" : "savera",
+      "suggested" : true
+    } ]
+  }
+}

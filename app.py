@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 @app.route('/receive',methods=['POST','GET'])
 def g():
+	#return request.args.get('hub.challenge')
 	a = request.get_json()
 	#print a
 	#print ">>>>>>>>>>>>>>>>>>>"
@@ -17,6 +18,7 @@ def g():
 		userID= a['entry'][0]['messaging'][0]['sender']['id']
 		#postFbtext(userID,)
 		#witResp(mess)
+		getWit(mess)
 	except:
 		print 'FB message input Failed'
 
@@ -42,6 +44,14 @@ def getJson(userID):
 	}
 	return a
 
+def fileToJson(txtfile):
+	try:
+		with open(txtfile, "r") as ins:
+			a = json.load(ins)
+	   	return a
+	except:
+		print 'Error in converting txt file to Json'
+
 def postFbtext(userID,msg):
 	try:
 		string ="curl -X POST -H \"Content-Type: application/json\" -d \'{ \
@@ -56,4 +66,17 @@ def postFbtext(userID,msg):
 	except:
 		print 'Error in Posting to FB'
 
-	
+
+
+def getWit(mess):
+	mess=mess.replace(" ","%20")
+	cmd = "curl -H 'Authorization: Bearer LVLKPQNZ5IEMVZ6OB5QHGSUZGBBGZCNM' 'https://api.wit.ai/message?v=20160813&q=" + mess + "'"
+	os.system(cmd + " > temp.txt")
+	a=fileToJson("temp.txt")
+	response = {}
+	try:
+		for key,value in a['entities'].iteritems():
+			response[key] = value[0]['value']
+			return response
+	except:
+		print 'Error in removing unwanted fields'
