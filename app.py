@@ -8,72 +8,58 @@ app = Flask(__name__)
 
 @app.route('/receive',methods=['POST','GET'])
 
-Message = ""
 def g():
 	#return request.args.get('hub.challenge')
 	a = request.get_json()
-	#print a
+	print a
 	#print ">>>>>>>>>>>>>>>>>>>"
 	try:
 		mess = a['entry'][0]['messaging'][0]['message']['text']
 		print mess
-        Message = mess
 		userID= a['entry'][0]['messaging'][0]['sender']['id']
 		#postFbtext(userID,)
 		#witResp(mess)
-		getWit(mess)
+		#getWit(mess)
 	except:
 		print 'FB message input Failed'
+	try:
+		print (respond(userID, mess))
+	except:
+			print 'Error in response'
 
 	return 'hello world'
 
-def respond(message): 
+def respond(userId,message): 
     #print('Hello World!')
     dicteg = getWit(message)
+    print dicteg
     mode = 0;
-    location = "" 
-    time = ""
-    seatno = "" 
-    order = ""
-    for key,val in dicteg.iteritems():
-        if mode == 1: 
-            if key=="wit/location": 
-                location = value;
-            elif key=="wit/datetime":
-                time = value;
-            elif key=="number_seats": 
-                seatno = value;
-        if mode == 2: 
-            if key=="wit/location": 
-                location = value;
-            elif key=="fooditems":
-                order = value;
-        if mode == 3: 
-            if key=="wit/location": 
-                location = value;                      
+    location = dicteg.get('location' ,"")
+    time = dicteg.get('datetime',"")
+    seatno = dicteg.get('number_seats' ,"")
+
+    for key,value in dicteg.iteritems():                     
         if key == "self_enquiry":
-            return 'My name is Emily and I was designed by Varun and Roopesh, at SSN.Also, I promise not to destroy humanity :)'
+        	postFbtext(userId,'My name is Emily and I was designed by Varun and Roopesh, at SSN.Also, I promise not to destroy humanity :)')
+        	return 'My name is Emily and I was designed by Varun and Roopesh, at SSN.Also, I promise not to destroy humanity :)'
         elif key == "greeting":
-            return 'Hello there!'
-        elif key == "action" 
+        	postFbtext(userId,'Hello there!')
+        	return 'Hello there!'
+        elif key == "action":
             if value == "book": 
-                mode = 1; 
+                mode = 1
             if value == "order" or value == "preorder": 
-                mode = 2;     
+                mode = 2  
             if value == "specials": 
-                mode = 3;  
+                mode = 3
     if mode == 1: 
-        return location+" "+time+" "+seatno; 
+        return location+" "+time+" "+seatno
     if mode == 2: 
-        return location+" "+order; 
-    if mode == 3: 
-        return location;                        
-        
+        return location+" "+order
+    if mode == 3:
+    	return location
 
-def getMsg():
-    return Message
-
-Witaccess_token = "LVLKPQNZ5IEMVZ6OB5QHGSUZGBBGZCNM"
+Witaccess_token = "LVLKPQNZ5IEMVZ6OB5QHGSUZGBBGZCNM"	
 
 def witResp(message):
 	try:
@@ -102,6 +88,7 @@ def fileToJson(txtfile):
 		print 'Error in converting txt file to Json'
 
 def postFbtext(userID,msg):
+	#print string
 	try:
 		string ="curl -X POST -H \"Content-Type: application/json\" -d \'{ \
 	  \"recipient\":{	\
@@ -122,10 +109,11 @@ def getWit(mess):
 	cmd = "curl -H 'Authorization: Bearer LVLKPQNZ5IEMVZ6OB5QHGSUZGBBGZCNM' 'https://api.wit.ai/message?v=20160813&q=" + mess + "'"
 	os.system(cmd + " > temp.txt")
 	a=fileToJson("temp.txt")
+	#print a
 	response = {}
 	try:
 		for key,value in a['entities'].iteritems():
 			response[key] = value[0]['value']
-			return response
+		return response
 	except:
 		print 'Error in removing unwanted fields'

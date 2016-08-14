@@ -1,21 +1,31 @@
 {
-  "msg_id" : "0f7ffad3-3c6f-4f08-87f3-f293e3c9960d",
-  "_text" : "book me 7 seats in savera",
+  "msg_id" : "660fda8c-d1ae-4968-82a6-3935a76b9449",
+  "_text" : "I have a date tomorrow at 7 make a reservation for 2 at Savera",
   "entities" : {
-    "action" : [ {
-      "confidence" : 0.9945078527002946,
+    "datetime" : [ {
+      "confidence" : 0.9925148018157413,
       "type" : "value",
-      "value" : "book"
+      "value" : "2016-08-15T07:00:00.000+05:30",
+      "grain" : "hour",
+      "values" : [ {
+        "type" : "value",
+        "value" : "2016-08-15T07:00:00.000+05:30",
+        "grain" : "hour"
+      }, {
+        "type" : "value",
+        "value" : "2016-08-15T19:00:00.000+05:30",
+        "grain" : "hour"
+      } ]
     } ],
     "number_seats" : [ {
-      "confidence" : 0.8738154646092839,
+      "confidence" : 1,
       "type" : "value",
-      "value" : "7 "
+      "value" : "2"
     } ],
     "location" : [ {
-      "confidence" : 0.8901269885592972,
+      "confidence" : 0.6904209713971416,
       "type" : "value",
-      "value" : "savera",
+      "value" : "Savera",
       "suggested" : true
     } ]
   }
