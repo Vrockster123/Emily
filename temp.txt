@@ -1,32 +1,11 @@
 {
-  "msg_id" : "660fda8c-d1ae-4968-82a6-3935a76b9449",
-  "_text" : "I have a date tomorrow at 7 make a reservation for 2 at Savera",
+  "msg_id" : "ade1242e-841f-458a-a291-a32b52706035",
+  "_text" : "Currently Sangeetha does not have a chef suggested specials",
   "entities" : {
-    "datetime" : [ {
-      "confidence" : 0.9925148018157413,
+    "action" : [ {
+      "confidence" : 0.7442316273434888,
       "type" : "value",
-      "value" : "2016-08-15T07:00:00.000+05:30",
-      "grain" : "hour",
-      "values" : [ {
-        "type" : "value",
-        "value" : "2016-08-15T07:00:00.000+05:30",
-        "grain" : "hour"
-      }, {
-        "type" : "value",
-        "value" : "2016-08-15T19:00:00.000+05:30",
-        "grain" : "hour"
-      } ]
-    } ],
-    "number_seats" : [ {
-      "confidence" : 1,
-      "type" : "value",
-      "value" : "2"
-    } ],
-    "location" : [ {
-      "confidence" : 0.6904209713971416,
-      "type" : "value",
-      "value" : "Savera",
-      "suggested" : true
+      "value" : "specials"
     } ]
   }
 }

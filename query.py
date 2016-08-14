@@ -18,9 +18,9 @@ def getQuery():
 			a = json.load(ins)
 		for x in a:
 			print x['name']
+		return a
 	except:
 		print 'Error in converting txt file to Json'
-	print Specials(a,'Savera')
 
 
 #returns restaurants that are in cuisine[]
@@ -36,9 +36,9 @@ def SpecialCheck(a,cuisine):
 #returns restaurants that have Special dishes, bot should ask for booking a reservation
 def SpecialDish(a,dish):
 	rests = []
-	for i in a:
+	for i in a:	
 		for j in dish:
-			if j not in [x['name'] for x in i['items']]:
+			if j.lower() not in [x['name'].lower() for x in i['items']]:
 				break
 			rests.append(i['name'])
 	a = []
@@ -53,7 +53,7 @@ def isAvail(rest,dish):
 	rests = []
 	for i in a:
 		for j in i['items']:
-			if j['name'] in dish:
+			if j['name'].lower() in dish.lower():
 				rests.append(i['name'])
 				break
 	return rests
@@ -61,10 +61,18 @@ def isAvail(rest,dish):
 def Specials(a,rest):
 	specials = []
 	for i in a:
-		if i['name'] == rest:
+		if i['name'].lower() == rest.lower():
 			for j in i['items']:
 				if j['speciality'] == True:
 					specials.append(j['name'])
 	return specials
 
-getQuery()
+def CalcCost(a,rest,dishes):
+	cost = 0
+	for i in a:
+		if i['name'] == rest :
+			for j in i['items']:
+				if j['name'] in dishes:
+					cost = cost + j['price']
+
+	return cost
